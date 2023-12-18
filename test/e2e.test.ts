@@ -2,7 +2,7 @@ import { test, expect, beforeEach, afterEach } from "vitest";
 import puppeteer, { Browser } from "puppeteer";
 
 let browser: Browser;
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://localhost:3000";
 
 beforeEach(async () => {
   browser = await puppeteer.launch({ headless: "new" });
@@ -94,4 +94,5 @@ test("click from home page on page3 link navigate to page page3 ", async () => {
       firstH2Element
     ); 
     expect(textContent).toBe("Page2");
+    expect(page.url()).toBe(`${BASE_URL}/page2`)
   });
