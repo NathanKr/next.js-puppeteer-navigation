@@ -12,7 +12,7 @@ afterEach(async () => {
   await browser.close();
 });
 
-test("goto index page is ok", async () => {
+test("goto index page via url is ok", async () => {
   const page = await browser.newPage();
   const url = BASE_URL;
   await page.goto(url);
@@ -25,7 +25,7 @@ test("goto index page is ok", async () => {
   expect(textContent).toBe("Index Page");
 });
 
-test("goto index page2 is ok", async () => {
+test("goto page2 via url is ok", async () => {
   const page = await browser.newPage();
   const url = `${BASE_URL}/page2`;
   await page.goto(url);
@@ -38,7 +38,7 @@ test("goto index page2 is ok", async () => {
   expect(textContent).toBe("Page2");
 });
 
-test("goto index page3 is ok", async () => {
+test("goto page3 via url is ok", async () => {
   const page = await browser.newPage();
   const url = `${BASE_URL}/page3`;
   await page.goto(url);
@@ -82,4 +82,16 @@ test("click from home page on page3 link navigate to page page3 ", async () => {
     const pageTitle = await page.$eval('h2', element => element.textContent);
       expect(pageTitle).toBe('Page3')
   });
-  
+   
+  test("goto /courses/arbitrator via url navigates to page2", async () => {
+    const page = await browser.newPage();
+    const url = `${BASE_URL}/courses/arbitrator`;
+    await page.goto(url);
+    const firstH2Element = await page.$("h2");
+    expect(firstH2Element).toBeTruthy();
+    const textContent = await page.evaluate(
+      (element) => element?.textContent,
+      firstH2Element
+    ); 
+    expect(textContent).toBe("Page2");
+  });
